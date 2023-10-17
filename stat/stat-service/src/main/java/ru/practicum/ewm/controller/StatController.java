@@ -16,6 +16,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StatController {
     private final StatService service;
+
+    // Сохранение информации о том,
+    // что на uri конкретного сервиса был отправлен запрос пользователем.
+    // Название сервиса, uri и ip пользователя указаны в теле запроса.
     @PostMapping("/hit")
     public EndpointHitDTO save(@RequestBody EndpointHitDTO endpointHitDTO) {
         return service.save(endpointHitDTO);
