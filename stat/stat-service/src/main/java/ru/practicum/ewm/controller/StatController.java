@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StatController {
     private final StatService service;
-    
     @PostMapping("/hit")
     public EndpointHitDTO save(@RequestBody EndpointHitDTO endpointHitDTO) {
         return service.save(endpointHitDTO);
