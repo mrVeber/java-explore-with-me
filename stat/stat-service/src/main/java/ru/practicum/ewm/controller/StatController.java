@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StatController {
     private final StatService service;
-    
+
     @PostMapping("/hit")
     public EndpointHitDTO save(@RequestBody EndpointHitDTO endpointHitDTO) {
         return service.save(endpointHitDTO);
@@ -27,7 +27,8 @@ public class StatController {
             @RequestParam LocalDateTime start,
             @RequestParam LocalDateTime end,
             @RequestParam(required = false) List<String> uris,
-            @RequestParam(defaultValue = "false") boolean unique) {
+            @RequestParam(defaultValue = "false") boolean unique
+    ) {
         return service.getStat(start, end, uris, unique);
     }
 }
