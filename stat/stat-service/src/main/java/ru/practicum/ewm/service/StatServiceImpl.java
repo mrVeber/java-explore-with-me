@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public class StatServiceImpl implements StatService {
     private final StatRepository repository;
+
     @Override
     public EndpointHitDTO save(EndpointHitDTO endpointHitDTO) {
         repository.save(EndpointHitMapper.toEndpointHit(endpointHitDTO));
