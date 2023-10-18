@@ -13,6 +13,6 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handlerBadRequest(RuntimeException e) {
         log.warn("404 {}", e.getMessage(), e);
-        return new ErrorResponse( e.getMessage());
+        return new ErrorResponse(e.getMessage());
     }
 }
