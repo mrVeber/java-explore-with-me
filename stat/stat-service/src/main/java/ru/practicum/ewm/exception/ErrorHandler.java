@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class ErrorHandler {
-    @ExceptionHandler
+    @ExceptionHandler({BadRequestException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handlerBadRequest(final BadRequestException e) {
+    public ErrorResponse handlerBadRequest(RuntimeException e) {
         log.warn("404 {}", e.getMessage(), e);
-        return new ErrorResponse("Object not available 400 ", e.getMessage());
+        return new ErrorResponse( e.getMessage());
     }
 }
