@@ -49,11 +49,13 @@ public class ViewStatsSearchDaoImpl implements ViewStatsSearchDao {
                 .between(endpointHitRoot.get("timestamp"), start, end);
         predicateList.add(betweenPredicate);
         if (uris != null) {
-            predicateList.add(criteriaBuilder.or(uris.stream()
-                    .map(uri -> criteriaBuilder.in(endpointHitRoot.get("uri")))
+            /*predicateList.add(criteriaBuilder.or(uris.stream()
+                    .map(uri -> criteriaBuilder.like(endpointHitRoot.get("uri"), uri))
                     .collect(Collectors.toList())
                     .toArray(Predicate[]::new)
-            ));
+            ));*/
+            predicateList.add(criteriaBuilder.in(endpointHitRoot.get("uri")));
+
         }
         viewStatsCriteriaQuery.where(predicateList.toArray(Predicate[]::new));
 
