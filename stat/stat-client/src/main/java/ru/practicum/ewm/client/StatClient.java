@@ -40,8 +40,7 @@ public class StatClient extends BaseClient {
                                           List<String> uris,
                                           boolean unique) {
 
-        //String paramsUri = uris.stream().reduce("", (result, uri) -> uri + "," + result);
-        String paramsUri = String.join(",", "uri", "result");
+        String paramsUri = uris.stream().reduce("", (result, uri) -> uri + "," + result);
 
         Map<String, Object> parameters = Map.of(
                 "start", start.format(FORMATTER),
