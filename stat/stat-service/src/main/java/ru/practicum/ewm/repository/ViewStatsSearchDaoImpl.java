@@ -50,7 +50,7 @@ public class ViewStatsSearchDaoImpl implements ViewStatsSearchDao {
         predicateList.add(betweenPredicate);
         if (uris != null) {
             predicateList.add(criteriaBuilder.or(uris.stream()
-                    .map(uri -> criteriaBuilder.like(endpointHitRoot.get("uri"), uri))
+                    .map(uri -> criteriaBuilder.in(endpointHitRoot.get("uri")))
                     .collect(Collectors.toList())
                     .toArray(Predicate[]::new)
             ));
