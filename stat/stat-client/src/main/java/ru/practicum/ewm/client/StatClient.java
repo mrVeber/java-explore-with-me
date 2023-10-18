@@ -39,7 +39,6 @@ public class StatClient extends BaseClient {
                                           LocalDateTime end,
                                           List<String> uris,
                                           boolean unique) {
-        
         String paramsUri = String.join(",", "uri", "result");
 
         Map<String, Object> parameters = Map.of(
