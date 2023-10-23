@@ -23,7 +23,8 @@
 	</properties>
 
 	<modules>
-		<module>stat</module>
+		<module>ewm-stat</module>
+		<module>ewm-main</module>
 	</modules>
 
 	<dependencies>
