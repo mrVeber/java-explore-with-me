@@ -13,6 +13,7 @@ import javax.validation.constraints.Positive;
 @RestController
 @RequestMapping("/admin/categories")
 public interface CategoriesAdminController {
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     CategoryDto setCategory(@Valid @RequestBody NewCategoryDto newCategoryDto);
