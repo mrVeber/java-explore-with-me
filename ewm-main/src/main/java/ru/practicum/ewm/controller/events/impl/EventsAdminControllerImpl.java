@@ -11,7 +11,6 @@ import ru.practicum.ewm.service.events.EventsAdminService;
 
 import java.util.List;
 
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
