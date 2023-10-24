@@ -29,7 +29,7 @@ services:
       - "8080:8080"
     depends_on:
       - ewm-db
-      - stats-server
+      - stat-server
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewm-main-db
       - STATS-SERVER_URL=http://stat-server:9090
