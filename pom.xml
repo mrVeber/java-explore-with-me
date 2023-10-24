@@ -25,7 +25,7 @@
 	<modules>
 		<module>ewm-stat</module>
 		<module>ewm-main</module>
-	</modules>
+    </modules>
 
 	<dependencies>
 		<dependency>
