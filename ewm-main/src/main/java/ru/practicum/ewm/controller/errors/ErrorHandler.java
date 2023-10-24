@@ -38,4 +38,11 @@ public class ErrorHandler {
         log.warn("409 {}", e.getMessage(), e);
         return new ErrorResponse("No valid data 409", e.getMessage());
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleInternalServerError(final Exception e) {
+        log.warn( e.getMessage(), e);
+        return new ErrorResponse(e.getMessage());
+    }
 }
