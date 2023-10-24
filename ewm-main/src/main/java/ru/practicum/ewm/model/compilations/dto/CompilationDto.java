@@ -6,10 +6,6 @@ import ru.practicum.ewm.model.events.dto.EventShortDto;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-/**
- * Подборка событий
- */
-
 @Getter
 @Setter
 @Builder

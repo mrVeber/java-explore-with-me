@@ -26,5 +26,4 @@ public class Compilation {
     @ManyToMany
     @JoinColumn(name = "events_id")
     private Set<Event> events;
-
 }

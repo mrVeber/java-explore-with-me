@@ -11,5 +11,4 @@ public interface CompilationsRepository extends JpaRepository<Compilation, Integ
     List<Compilation> findAllByPinned(Boolean pinned, Pageable pageable);
 
     List<Compilation> findAllBy(Pageable pageable);
-
 }
