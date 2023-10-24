@@ -9,6 +9,7 @@ import ru.practicum.ewm.categories.dto.CategoryDto;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
+
 @Validated
 @RestController
 @RequiredArgsConstructor
