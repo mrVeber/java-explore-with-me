@@ -1,69 +1,67 @@
 package ru.practicum.ewm.client;
 
-import dto.EndpointHitDTO;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import dto.EndpointHitDto;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@Slf4j
-@Component
-@RequiredArgsConstructor
+@Service
 public class StatClient {
-    private final WebClient webClient;
+    @Value("${client.url}")
+    private String serverUrl;
+    private final RestTemplate rest;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-    public void save(EndpointHitDTO endpointHitDTO) {
-        log.info("Save request to - {}", endpointHitDTO);
-        webClient.post()
-                .uri("/hit")
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(endpointHitDTO))
-                .exchangeToMono(response -> {
-                    if (response.statusCode().equals(HttpStatus.CREATED)) {
-                        return response.bodyToMono(Object.class)
-                                .map(body -> ResponseEntity.status(HttpStatus.CREATED).body(body));
-                    } else {
-                        return response.createException()
-                                .flatMap(Mono::error);
-                    }
-                })
-                .block();
+    public StatClient() {
+        this.rest = new RestTemplate();
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+        rest.setRequestFactory(requestFactory);
     }
 
-    public ResponseEntity<Object> getStat(LocalDateTime start,
-                                          LocalDateTime end,
-                                          List<String> uris,
-                                          boolean unique) {
-        log.info("Get statistics from - {} ", uris);
+    public ResponseEntity<Object> saveHit(EndpointHitDto hit) {
+        ResponseEntity<Object> response;
+        try {
+            response = rest.postForEntity(serverUrl + "/hit", hit, Object.class);
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsByteArray());
+        }
+        ResponseEntity.BodyBuilder responseBuilder = ResponseEntity.status(response.getStatusCode());
+        if (response.hasBody()) {
+            return responseBuilder.body(response.getBody());
+        }
+        return responseBuilder.build();
+    }
 
-        return webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/stats")
-                        .queryParam("start", start.format(FORMATTER))
-                        .queryParam("end", end.format(FORMATTER))
-                        .queryParam(uris.toString())
-                        .queryParam("unique", unique)
-                        .build())
-                .exchangeToMono(response -> {
-                    if (response.statusCode().is2xxSuccessful()) {
-                        return response.bodyToMono(Object.class)
-                                .map(body -> ResponseEntity.ok().body(body));
-                    } else {
-                        return response.createException()
-                                .flatMap(Mono::error);
-                    }
-                })
-                .block();
+    public ResponseEntity<Object> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+        StringBuilder url = new StringBuilder(serverUrl + "/stats?");
+        for (String uri : uris) {
+            url.append("&uris=").append(uri);
+        }
+        url.append("&unique=").append(unique);
+        url.append("&start=").append(start.format(formatter));
+        url.append("&end=").append(end.format(formatter));
+
+        ResponseEntity<Object> response;
+        try {
+            response = rest.exchange(url.toString(), HttpMethod.GET, null, Object.class);
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsByteArray());
+        }
+        ResponseEntity.BodyBuilder responseBuilder = ResponseEntity.status(response.getStatusCode());
+        if (response.hasBody()) {
+            return responseBuilder.body(response.getBody());
+        }
+        return responseBuilder.build();
     }
 }
