@@ -11,6 +11,7 @@ import ru.practicum.ewm.model.errors.NotFoundException;
 import ru.practicum.ewm.repository.categories.CategoriesRepository;
 import ru.practicum.ewm.service.categories.CategoriesService;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
 
