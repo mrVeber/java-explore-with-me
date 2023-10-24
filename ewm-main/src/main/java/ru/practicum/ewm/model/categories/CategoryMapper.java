@@ -6,6 +6,7 @@ import ru.practicum.ewm.model.categories.dto.NewCategoryDto;
 
 @UtilityClass
 public class CategoryMapper {
+
     public Category toCategory(NewCategoryDto newCategoryDto) {
         return Category.builder()
                 .name(newCategoryDto.getName())
