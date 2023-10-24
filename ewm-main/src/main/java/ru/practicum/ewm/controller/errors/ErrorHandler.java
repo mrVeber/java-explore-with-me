@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import ru.practicum.ewm.model.ApiError;
-import ru.practicum.ewm.model.errors.ForbiddenException;
+import ru.practicum.ewm.model.errors.BadRequestException;
+import ru.practicum.ewm.model.errors.ConflictException;
 import ru.practicum.ewm.model.errors.NotFoundException;
-import ru.practicum.ewm.model.errors.ValidationException;
 
 import javax.validation.ConstraintViolationException;
 import java.io.PrintWriter;
@@ -38,7 +38,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ApiError conflictEvent(ForbiddenException e) {
+    public ApiError conflictEvent(ConflictException e) {
         log.error(stackTraceToString(e));
         return ApiError.builder()
                 .message(e.getMessage())
@@ -60,7 +60,7 @@ public class ErrorHandler {
                 .build();
     }
 
-    @ExceptionHandler({ValidationException.class, NumberFormatException.class,
+    @ExceptionHandler({BadRequestException.class, NumberFormatException.class,
             MethodArgumentTypeMismatchException.class, MethodArgumentNotValidException.class,
             MissingServletRequestParameterException.class, ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
