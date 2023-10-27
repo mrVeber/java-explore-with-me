@@ -46,8 +46,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategoryById(Long catId) {
         Category category = checkCategory(catId);
-        List<Event> events = eventsRepository.findByCategory(category);
-        if (!events.isEmpty()) {
+       // List<Event> events = eventsRepository.findByCategory(category);
+//        if (!events.isEmpty()) {
+        if(eventsRepository.existsById(catId)) {
             throw new ConflictException("Can't delete category due to using for some events");
         }
         categoryRepository.deleteById(catId);
