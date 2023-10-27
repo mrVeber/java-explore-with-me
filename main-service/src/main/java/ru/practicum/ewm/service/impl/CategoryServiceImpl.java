@@ -8,7 +8,6 @@ import ru.practicum.ewm.dto.NewCategoryDto;
 import ru.practicum.ewm.exception.ConflictException;
 import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.model.Category;
-import ru.practicum.ewm.model.Event;
 import ru.practicum.ewm.model.mappers.CategoryMapper;
 import ru.practicum.ewm.repository.CategoryRepository;
 import ru.practicum.ewm.repository.EventRepository;
@@ -48,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = checkCategory(catId);
        // List<Event> events = eventsRepository.findByCategory(category);
 //        if (!events.isEmpty()) {
-        if(eventsRepository.existsById(catId)) {
+        if (eventsRepository.existsById(catId)) {
             throw new ConflictException("Can't delete category due to using for some events");
         }
         categoryRepository.deleteById(catId);
