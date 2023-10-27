@@ -56,11 +56,12 @@ public class CompilationServiceImpl implements CompilationService {
         }
 
         compilation.setPinned(Optional.ofNullable(update.getPinned()).orElse(compilation.getPinned()));
-        if (compilation.getTitle().isBlank()) {
-            throw new UncorrectedParametersException("Title не может состоять из пробелов");
+        if (compilation.getTitle() != null) {
+            if (compilation.getTitle().isBlank()) {
+                throw new UncorrectedParametersException("Title не может состоять из пробелов");
+            }
         }
-        compilation.setTitle(Optional.ofNullable(update.getTitle()).orElse(compilation.getTitle()));
-
+        //compilation.setTitle(Optional.ofNullable(update.getTitle()).orElse(compilation.getTitle()));
         return CompilationMapper.toDto(compilation);
     }
 
