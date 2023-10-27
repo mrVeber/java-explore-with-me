@@ -2,6 +2,7 @@ package ru.practicum.ewm.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.ewm.model.enums.EventStatus;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Data
 @Entity(name = "events")
 public class Event {
     @Id
