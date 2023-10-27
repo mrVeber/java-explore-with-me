@@ -57,7 +57,7 @@ public class CompilationServiceImpl implements CompilationService {
 
         compilation.setPinned(Optional.ofNullable(update.getPinned()).orElse(compilation.getPinned()));
         if (compilation.getTitle() == null) {
-                throw new UncorrectedParametersException("null");
+                throw new UncorrectedParametersException("Title не может состоять из пробелов");
         }
         compilation.setTitle(Optional.ofNullable(update.getTitle()).orElse(compilation.getTitle()));
         return CompilationMapper.toDto(compilation);
