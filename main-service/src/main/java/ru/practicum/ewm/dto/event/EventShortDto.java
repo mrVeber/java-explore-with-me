@@ -1,7 +1,9 @@
-package ru.practicum.ewm.dto;
+package ru.practicum.ewm.dto.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import ru.practicum.ewm.dto.user.UserShortDto;
+import ru.practicum.ewm.dto.category.CategoryDto;
 
 import java.time.LocalDateTime;
 
