@@ -1,9 +1,10 @@
-package ru.practicum.ewm.dto;
+package ru.practicum.ewm.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.practicum.ewm.dto.request.UpdateEventRequest;
 import ru.practicum.ewm.model.enums.EventUserState;
 
 @Getter
